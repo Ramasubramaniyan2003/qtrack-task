@@ -1,0 +1,56 @@
+extends layout 
+
+block head 
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    title Employee Login
+    link(rel='stylesheet', href='./css/style.css')
+    link(rel='stylesheet', href='https://unicons.iconscout.com/release/v4.0.0/css/line.css')
+ 
+
+block content
+    // Home
+    section.home
+        .form_container.forms
+            // Login From
+            .form.login_form
+                form#loginForm(role='form')
+                    h2 Login
+                    .input_box
+                        input(type='email', placeholder='Enter your email', name="email", required='')
+                        i.uil.uil-envelope-alt.email
+                    .input_box
+                        input(type='password', placeholder='Enter your password', name="password", required='')
+                        i.uil.uil-lock.password
+                        i.uil.uil-eye-slash.pw_hide
+                    .option_field
+                        span.checkbox
+                            input#check(type='checkbox')
+                            label(for='check') Remember me
+                        a.forgot_pw(href='#') Forgot password?
+                    button.button Login Now
+                    .login_signup
+                        | Don&apos;t have an account? 
+                        a#signup.link(href='#') Signup
+            // Signup From
+            .form.signup_form
+                form#signupForm(role='form')
+                    h2 Signup
+                    .input_box
+                        input#signupEmail(type='email', placeholder='Enter your email',name="email" required)
+                        i.uil.uil-envelope-alt.email
+                    .input_box
+                        input#signupPassword(type='password', placeholder='Create password',password="password" required)
+                        i.uil.uil-lock.password
+                        i.uil.uil-eye-slash.pw_hide
+                    .input_box
+                        input#signupCnfrmPassword(type='password', placeholder='Confirm password',name="confirmPassword" required)
+                        i.uil.uil-lock.password
+                        i.uil.uil-eye-slash.pw_hide
+                    button.button Signup Now
+                    .login_signup
+                        | Already have an account? 
+                        a#login.link(href='#') Login
+block foot
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    script(src='./js/login.js')

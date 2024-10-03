@@ -1,0 +1,77 @@
+
+style.
+    body {
+    height: 100vh;
+    width:100%;
+    }
+    #sidebar {
+    width: 15rem;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    background-color: #343a40;
+    color: white;
+    z-index: 1000;
+    overflow-y: auto;
+    }
+    #sidebar .nav-link {
+    color: white;
+    }
+    #sidebar .nav-link:hover {
+    background-color: #495057;
+    }
+    #content {
+    margin-left: 15rem ;
+    padding: 0;
+    position: relative;
+    margin-right: 0;
+    }
+    .sidebar-menu li {
+    list-style-type: none; 
+    }
+
+    .sidebar-menu li a {
+        text-decoration: none; 
+        color: #000; 
+    }
+
+    .sidebar-menu li.active a {
+        font-weight: bold; 
+        color: #007bff; 
+        background-color: #f8f9fa; 
+    }
+
+aside
+    #sidebar.bg-dark
+        .d-flex.flex-column.flex-shrink-0.p-3.text-white
+            a.navbar-brand(href='/') User Info App
+            hr
+            ul.nav.nav-pills.flex-column.mb-auto
+                li.nav-item
+                    a.nav-link.active(href='/') Home
+                li.nav-item
+                    a.nav-link(href='/users') User
+                li
+                    a.nav-link(href='/settings') Settings
+                li
+                    a.nav-link(href='/help') Help
+                li
+                    a.nav-link(href='/logout') Logout
+
+    #content
+        nav.navbar.navbar-light.bg-light
+                ul.nav.navbar-nav.ms-auto(style="margin-right:15px;")
+                    li.nav-item
+                        a.nav-link(href='#')
+                    li.nav-item
+                        a.nav-link(href='#')#loginUser Test User
+
+        .container-fluid
+                div 
+script.
+    const user = localStorage.getItem('email');
+    document.querySelector('#loginUser').text = user;
+
+    document.querySelector('#logout').addEventListener('click', () => {
+    localStorage.clear();   
+    });

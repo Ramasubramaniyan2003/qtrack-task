@@ -1,0 +1,243 @@
+extends layout
+
+block head 
+  <link href="DataTables/datatables.min.css" rel="stylesheet">
+  link(rel='stylesheet', href='/stylesheets/style.css')
+  link(rel='stylesheet', href='./bootstrap/css/bootstrap.min.css')
+
+block content
+  include ./sidebar.jade
+    .row(style="margin-top:1.5rem; margin-bottom:1rem;")
+      .col-sm-12
+        section
+          h5
+            | User
+            .btn-group.float-end(style='margin:-8px 0 0;')
+              button.btn.btn-primary(data-bs-toggle="modal" data-bs-target="#registerModal") 
+                | New User
+                i.fa.fa-plus
+
+          //add user    
+          .modal.fade(id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true")
+            .modal-dialog
+                .modal-content
+                  form#registerForm(role='form')
+                    .modal-header
+                        h5.modal-title(id="registerModalLabel") User Registration
+                        button.btn-close(type="button" data-bs-dismiss="modal" aria-label="Close")
+                    .modal-body
+                            .mb-3
+                                label.form-label(for="firstName") First Name
+                                input.form-control(type="text" id="firstName" name="firstName" placeholder="Enter your first name" required minlength="2")
+                                small.form-text.text-muted Must be at least 2 characters long.
+
+                            .mb-3
+                                label.form-label(for="lastName") Last Name
+                                input.form-control(type="text" id="lastName" name="lastName" placeholder="Enter your last name" required minlength="2")
+                                small.form-text.text-muted Must be at least 2 characters long.
+
+                            .mb-3
+                                label.form-label(for="phoneNo") Phone Number (Indian)
+                                input.form-control(type="tel" id="phoneNo" name="phoneNo" placeholder="Enter your 10-digit phone number" required pattern="[0-9]{10}")
+                                small.form-text.text-muted Should be a valid Indian phone number starting with +91 or 10 digits.
+
+                            .mb-3
+                                label.form-label(for="email") Email
+                                input.form-control(type="email" id="email" name="email" placeholder="Enter your email" required)
+                                small.form-text.text-muted Must be a valid email address.
+
+                            .mb-3
+                                label.form-label(for="nationalId") Aadhaar No
+                                input.form-control(type="text" id="nationalId" name="nationalId" placeholder="Enter your National ID" pattern="^(\+91[ -]?)?[0]?(91)?[6789]\d{9}$" title="Please enter a valid Indian phone number starting with +91 or 10 digits." maxlength="13" required)
+                                small.form-text.text-muted National ID must be less than or equal to 16 digits.
+
+                            .mb-3
+                                label.form-label(for="addressType") Address Type (Owned / Rent)
+                                select.form-select(id="addressType" name="addressType" required)
+                                    option(value="" disabled selected) Select Address Type
+                                    option(value="Owned") Owned
+                                    option(value="Rent") Rent
+                            .mb-3
+                                label.form-label(for="addressLine1") Address Line 1
+                                input.form-control(type="text" id="addressLine1" name="addressLine1" placeholder="Enter Address Line 1" required)
+                            .mb-3
+                                label.form-label(for="addressLine2") Address Line 2
+                                input.form-control(type="text" id="addressLine2" name="addressLine2" placeholder="Enter Address Line 2")
+                            .mb-3
+                                label.form-label(for="addressLine3") Address Line 3
+                                input.form-control(type="text" id="addressLine3" name="addressLine3" placeholder="Enter Address Line 3")
+                            .mb-3
+                                label.form-label(for="city") City
+                                input.form-control(type="text" id="city" name="city" placeholder="Enter City" required)
+                            .mb-3
+                                label.form-label(for="state") State
+                                select.form-select(id="state" name="state" required)
+                                  option(value="" disabled selected) Select State
+                                  option(value="Andhra Pradesh") Andhra Pradesh
+                                  option(value="Arunachal Pradesh") Arunachal Pradesh
+                                  option(value="Assam") Assam
+                                  option(value="Bihar") Bihar
+                                  option(value="Chhattisgarh") Chhattisgarh
+                                  option(value="Goa") Goa
+                                  option(value="Gujarat") Gujarat
+                                  option(value="Haryana") Haryana
+                                  option(value="Himachal Pradesh") Himachal Pradesh
+                                  option(value="Jharkhand") Jharkhand
+                                  option(value="Karnataka") Karnataka
+                                  option(value="Kerala") Kerala
+                                  option(value="Madhya Pradesh") Madhya Pradesh
+                                  option(value="Maharashtra") Maharashtra
+                                  option(value="Manipur") Manipur
+                                  option(value="Meghalaya") Meghalaya
+                                  option(value="Mizoram") Mizoram
+                                  option(value="Nagaland") Nagaland
+                                  option(value="Odisha") Odisha
+                                  option(value="Punjab") Punjab
+                                  option(value="Rajasthan") Rajasthan
+                                  option(value="Sikkim") Sikkim
+                                  option(value="Tamil Nadu") Tamil Nadu
+                                  option(value="Telangana") Telangana
+                                  option(value="Tripura") Tripura
+                                  option(value="Uttar Pradesh") Uttar Pradesh
+                                  option(value="Uttarakhand") Uttarakhand
+                                  option(value="West Bengal") West Bengal
+                            .mb-3
+                                label.form-label(for="pincode") Pincode
+                                input.form-control(type="text" id="pincode" name="pincode" placeholder="Enter Pincode" pattern="[0-9]{6}" required)
+                                small.form-text.text-muted Must be a 6-digit valid pincode.
+                            .form-check.mb-3
+                                input.form-check-input(type="checkbox" id="isPermanent" name="isPermanent")
+                                label.form-check-label(for="isPermanent") Is Permanent Address?
+
+                    .modal-footer
+                        button.btn.btn-secondary(type="button" data-bs-dismiss="modal") Close
+                        button.btn.btn-primary#registerBtn(type="submit") Register
+          //update user
+          .modal.fade(id="updateUserModal" tabindex="-1" aria-labelledby="updateUserModalLabel" aria-hidden="true")
+            .modal-dialog
+              .modal-content
+                form#updateUserForm(role='form')
+                  .modal-header
+                    h5.modal-title(id="updateUserModalLabel") Update User Information
+                    button.btn-close(type="button" data-bs-dismiss="modal" aria-label="Close")
+                  .modal-body
+                      // First Name
+                      .mb-3
+                        label.form-label(for="updateFirstName") First Name
+                        input.form-control(type="text" id="updateFirstName" name="firstName" placeholder="Enter first name" required minlength="2")
+                      
+                      // Last Name
+                      .mb-3
+                        label.form-label(for="updateLastName") Last Name
+                        input.form-control(type="text" id="updateLastName" name="lastName" placeholder="Enter last name" required minlength="2")
+                      
+                      // Phone Number (Indian)
+                      .mb-3
+                        label.form-label(for="updatePhoneNo") Phone Number (Indian)
+                        input.form-control(type="tel" id="updatePhoneNo" name="phoneNo", placeholder="Enter 10-digit phone number",pattern="^(\+91[ -]?)?[0]?(91)?[6789]\d{9}$" title="Please enter a valid Indian phone number starting with +91 or 10 digits." maxlength="13" required)
+                        small.form-text.text-muted Should be a valid Indian phone number starting with +91 or 10 digits.
+                      
+                      // Email
+                      .mb-3
+                        label.form-label(for="updateEmail") Email
+                        input.form-control(type="email" id="updateEmail" name="email" placeholder="Enter your email" required)
+                      
+                      // National ID
+                      .mb-3
+                        label.form-label(for="updateNationalId") National ID
+                        input.form-control(type="text" id="updateNationalId" name="nationalId" placeholder="Enter your National ID" maxlength="16" required)
+                      
+                      .mb-3
+                        label.form-label(for="updateAddressType") Address Type (Owned / Rent)
+                        select.form-select(id="updateAddressType" name="addressType" required)
+                            option(value="" disabled selected) Select Address Type
+                            option(value="Owned") Owned
+                            option(value="Rent") Rent
+                      // Address
+                      .mb-3
+                        label.form-label(for="updateAddressLine1") Address Line 1
+                        input.form-control(type="text" id="updateAddressLine1" name="addressLine1" placeholder="Enter Address Line 1" required)
+                      .mb-3
+                        label.form-label(for="addressLine2") Address Line 2
+                        input.form-control(type="text" id="updateAddressLine2" name="addressLine2" placeholder="Enter Address Line 2")
+                      .mb-3
+                        label.form-label(for="addressLine3") Address Line 3
+                        input.form-control(type="text" id="updateAddressLine3" name="addressLine3" placeholder="Enter Address Line 3")
+                      // City
+                      .mb-3
+                        label.form-label(for="updateCity") City
+                        input.form-control(type="text" id="updateCity" name="city" placeholder="Enter City" required)
+                      
+                      // State
+                      .mb-3
+                        label.form-label(for="updateState") State
+                        select.form-select(id="updateState" name="state" required)
+                          option(value="" disabled selected) Select State
+                          option(value="Andhra Pradesh") Andhra Pradesh
+                          option(value="Arunachal Pradesh") Arunachal Pradesh
+                          option(value="Assam") Assam
+                          option(value="Bihar") Bihar
+                          option(value="Chhattisgarh") Chhattisgarh
+                          option(value="Goa") Goa
+                          option(value="Gujarat") Gujarat
+                          option(value="Haryana") Haryana
+                          option(value="Himachal Pradesh") Himachal Pradesh
+                          option(value="Jharkhand") Jharkhand
+                          option(value="Karnataka") Karnataka
+                          option(value="Kerala") Kerala
+                          option(value="Madhya Pradesh") Madhya Pradesh
+                          option(value="Maharashtra") Maharashtra
+                          option(value="Manipur") Manipur
+                          option(value="Meghalaya") Meghalaya
+                          option(value="Mizoram") Mizoram
+                          option(value="Nagaland") Nagaland
+                          option(value="Odisha") Odisha
+                          option(value="Punjab") Punjab
+                          option(value="Rajasthan") Rajasthan
+                          option(value="Sikkim") Sikkim
+                          option(value="Tamil Nadu") Tamil Nadu
+                          option(value="Telangana") Telangana
+                          option(value="Tripura") Tripura
+                          option(value="Uttar Pradesh") Uttar Pradesh
+                          option(value="Uttarakhand") Uttarakhand
+                          option(value="West Bengal") West Bengal
+                      
+                      // Pincode
+                      .mb-3
+                        label.form-label(for="updatePincode") Pincode
+                        input.form-control(type="text" id="updatePincode" name="pincode" placeholder="Enter Pincode" pattern="[0-9]{6}" required)
+                      .form-check.mb-3
+                        input.form-check-input(type="checkbox" id="UpdateIsPermanent" name="isPermanent")
+                        label.form-check-label(for="UpdateIsPermanent") Is Permanent Address?
+
+
+                  .modal-footer
+                    input#updateId(type='hidden',name='id', value='new')
+                    button.btn.btn-secondary(type="button" data-bs-dismiss="modal") Close
+                    button.btn.btn-primary(type="submit") Update User
+
+    hr
+
+    table#userTable.display.table.table-bordered.table-striped(style="width:100%;")
+      thead
+        tr
+          th Id
+          th(style="min-width:8rem;") First Name
+          th(style="min-width:8rem;") Last Name
+          th(style="min-width:12rem;") Full Name
+          th(style="min-width:12rem;") Phone Number
+          th(style="min-width:12rem;") Email
+          th(style="min-width:12rem;") National ID
+          th(style="min-width:12rem;") Address Type
+          th(style="min-width:12rem;") Address (Permanent)
+          th(style="min-width:12rem;") Location
+          th(style="min-width:12rem;") Created At
+          th(style="min-width:12rem;") Action
+      tbody
+block foot
+  script(src="bootstrap/js/bootstrap.min.js")
+  <script src="DataTables/jquery.min.js"></script>
+  <script src="DataTables/datatables.min.js"></script>
+  script(src='//cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js' integrity='sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  <script src="./js/user.js"></script>
+
